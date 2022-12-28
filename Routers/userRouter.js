@@ -70,10 +70,10 @@ userRouter.post('/', async (req, res) => {
 })
 
 // Update user profile
-userRouter.put('/update-profile', async (req, res) => {
+userRouter.put('/update-profile/:email', async (req, res) => {
     try {
         const { name, email, phone, address, country } = req.body;
-        const filter = { email: req.body.email };
+        const filter = { email: req.params.email };
         const updateDoc = { $set: { name: name, email: email, phone: phone, address: address, country: country } };
         const user = await User.updateOne(filter, updateDoc, { upsert: true });
         res.json({ success: true, user });
