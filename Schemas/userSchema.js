@@ -7,7 +7,10 @@ const userSchema = mongoose.Schema({
     email: {
         type: String,
         required: true
-    }
+    },
+    phone: String,
+    address: String,
+    country: String
 });
 
 const User = mongoose.model('User', userSchema);
