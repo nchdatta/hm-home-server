@@ -2,6 +2,7 @@ const express = require('express');
 const cors = require('cors');
 const mongoose = require('mongoose');
 const userRouter = require('./Routers/userRouter');
+const countryRouter = require('./Routers/countryRouter');
 require('dotenv').config();
 const app = express();
 const port = process.env.PORT;
@@ -21,6 +22,9 @@ mongoose.connect(uri)
 
 // User route 
 app.use('/user', userRouter);
+
+// Country route 
+app.use('/countries', countryRouter);
 
 
 

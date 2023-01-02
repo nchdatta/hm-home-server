@@ -2,13 +2,24 @@ const express = require('express');
 const User = require('../Schemas/userSchema');
 const userRouter = express.Router();
 
-// Get all users 
+
+// Get paginated users 
 userRouter.get('/', async (req, res) => {
     try {
         const page = parseInt(req.query.page);
         const limit = parseInt(req.query.limit);
+        const total = await User.countDocuments();
         const users = await User.find().skip((page - 1) * limit).limit(limit);
-        res.status(200).json(users);
+        const data = {
+            meta: {
+                page: page,
+                limit: limit,
+                totalUsers: total,
+                totalPages: Math.ceil(total / limit)
+            },
+            data: users
+        };
+        res.status(200).json(data);
     } catch (err) {
         res.status(500).json({ message: 'Error occured on accessing users.' });
     }
