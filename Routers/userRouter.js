@@ -2,28 +2,12 @@ const express = require('express');
 const User = require('../Schemas/userSchema');
 const userRouter = express.Router();
 
-
-// // Get all users 
-// userRouter.get('/', async (req, res) => {
-//     try {
-//         const users = await User.find();
-//         res.status(200).json(query);
-//     } catch (err) {
-//         res.status(500).json({ message: 'Error occured on accessing users.' });
-//     }
-// })
 // Get all users 
 userRouter.get('/', async (req, res) => {
     try {
         const page = parseInt(req.query.page);
-        const size = parseInt(req.query.size);
-        let users;
-        if (page || size) {
-            users = await User.find().skip(page * size).limit(size);
-        } else {
-            users = await User.find();
-        }
-
+        const limit = parseInt(req.query.limit);
+        const users = await User.find().skip((page - 1) * size).limit(limit);
         res.status(200).json(users);
     } catch (err) {
         res.status(500).json({ message: 'Error occured on accessing users.' });
