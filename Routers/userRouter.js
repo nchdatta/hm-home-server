@@ -7,7 +7,7 @@ userRouter.get('/', async (req, res) => {
     try {
         const page = parseInt(req.query.page);
         const limit = parseInt(req.query.limit);
-        const users = await User.find().skip((page - 1) * size).limit(limit);
+        const users = await User.find().skip((page - 1) * limit).limit(limit);
         res.status(200).json(users);
     } catch (err) {
         res.status(500).json({ message: 'Error occured on accessing users.' });
